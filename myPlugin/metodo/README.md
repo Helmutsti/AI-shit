@@ -35,7 +35,7 @@ Dalla cartella del progetto target:
 
 ```
 /plugin marketplace add <cartella-del-repo-metodo>
-/plugin install metodo@metodo-dev
+/plugin install myworkflow@manuelmarket
 /reload-plugins
 ```
 

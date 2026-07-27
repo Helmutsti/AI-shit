@@ -1,0 +1,12 @@
+{
+  "name": "manuelmarket",
+  "owner": { "name": "Manuel Cucca" },
+  "description": "Marketplace di sviluppo del plugin 'myworkflow'. Punta al plugin nella sottocartella metodo/.",
+  "plugins": [
+    {
+      "name": "myworkflow",
+      "source": "./metodo",
+      "description": "Metodo di lavoro agentic-proof: i guardrail del metodo come hook meccanici (H5, §3.4, P4/H4, H3)."
+    }
+  ]
+}
