@@ -2,7 +2,7 @@
 
 Raccolta di **skill** per Claude / Claude Code. Ogni skill è un pacchetto `.skill` (un archivio ZIP contenente un file `SKILL.md` con frontmatter `name` + `description` e le istruzioni operative). Quando l'argomento di una richiesta corrisponde alla `description` di una skill, Claude la attiva e ne segue il protocollo.
 
-Il filo conduttore della raccolta sono **personas specializzate** per il design e la qualità delle interfacce web — costruite intorno ai principi di *Refactoring UI* (Adam Wathan, Steve Schoger) e agli standard di accessibilità (WCAG, EAA, Legge Stanca) — più un paio di skill di utilità generale (riassunti di studio, modalità di risposta compatta).
+Il filo conduttore della raccolta sono **personas specializzate** per il design e la qualità delle interfacce web — costruite intorno ai principi di *Refactoring UI* (Adam Wathan, Steve Schoger) e agli standard di accessibilità (WCAG, EAA, Legge Stanca) — più alcune skill di utilità generale (riassunti di studio, generazione del README di un progetto, modalità di risposta compatta).
 
 ## Indice delle skill
 
@@ -13,6 +13,7 @@ Il filo conduttore della raccolta sono **personas specializzate** per il design 
 | [`max-landing-qa`](#max--landing-page-qa) | QA landing page, profilo sanitario/mobile | Testare una landing/homepage pubblica dal punto di vista dell'utente target |
 | [`mary-editor-qa`](#mary--editor--admin-qa) | QA backoffice, utente admin non tecnico | Testare un CMS/pannello admin con gli occhi di un gestore non tecnico |
 | [`rose`](#rose--riassunti-di-ripasso) | Sintesi di materiale di studio | Creare schede di ripasso da corsi, doc, PDF |
+| [`readme-generator`](#readme-generator--documentazione-del-progetto) | Generatore di README.md | Scrivere o aggiornare il README leggendo il progetto corrente |
 | [`caveman-talk`](#caveman-talk) | Modalità di risposta primitiva | Risposte cortissime "da uomo delle caverne" |
 
 ---
@@ -62,6 +63,14 @@ Audita editor, backoffice, CMS, pannelli admin e dashboard interne (viewport des
 ### Rose — Riassunti di ripasso
 
 Crea **schede di ripasso in markdown** da materiale di studio (moduli di corsi, documentazione tecnica, PDF di training, articoli). Principio guida: *forma segue contenuto* — paragrafi discorsivi per i ragionamenti, schemi/tabelle/elenchi solo per ciò che è schematico per natura, **mai bullet senza verbo**. Ogni sezione dichiara la sua utilità prima del "come". Struttura tipica: Principio → sezioni nell'ordine del materiale → regole mentali → punti critici (⚠️) → esempi minimi → "Quiz lampo" finale per l'autoverifica.
+
+### Readme-generator — Documentazione del progetto
+
+Genera (o riscrive) il **`README.md`** del progetto in cui viene lanciata, ricavando i contenuti **dal codice** invece di inventarli: legge i manifest (`package.json`, `Cargo.toml`, `Makefile`, `CMakeLists.txt`, `*.csproj`, `pyproject.toml`…), gli entrypoint, la CI e i file di configurazione, e chiede all'utente **solo** ciò che il progetto non dice — in primis lo scopo, se non è deducibile.
+
+Produce cinque sezioni in ordine fisso: **descrizione breve e scopo** (3-5 righe, senza marketing), **build e messa in piedi** (prerequisiti con versioni reali, comandi dal clone all'app che gira, config minima), **installazione** — inclusa solo quando ha senso, cioè per progetti con binari o release e per ciò che gira in produzione (tipico di C/C++, Rust, Go: install da release, install da sorgente, servizio/container, verifica, aggiornamento) —, **comandi** in tabella `comando → cosa fa` presi solo da script/target esistenti, e **struttura del progetto** con le cartelle commentate, comprese quelle che compaiono *dopo* build e installazione (`target/`, `dist/`, path di install), marcate come generate.
+
+Regole portanti: non inventare comandi o requisiti, verificare ogni comando citato, usare la lingua del progetto, e **non sovrascrivere alla cieca** un README esistente (le sezioni fuori schema — crediti, roadmap, contributing — si conservano).
 
 ### Caveman Talk
 
