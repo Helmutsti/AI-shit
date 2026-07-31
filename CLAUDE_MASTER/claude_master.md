@@ -59,7 +59,7 @@ Un solo ciclo di vita per ogni punto/feature. I passi **[FISSO]** valgono sempre
 - L'idea entra in `docs/PIANO.md` (blocco appunti) o via **comando rapido** `bug:` / `punto:` / `forse:` / `miglioramento:` (sola annotazione, vedi P1). Nessun codice in questa fase.
 
 **Fase 1 — Definizione** *(prima di scrivere codice)*
-1. **[FISSO]** Analisi di fattibilità **reale**: leggi il codice vero, fai uno spike empirico se serve (vedi H1).
+1. **[FISSO]** Analisi di fattibilità **reale**: leggi il codice vero, fai uno spike empirico se serve (vedi H1). **Consulta anche la documentazione interna**: `DOCUMENTAZIONE.md` (funzionamenti controintuitivi, decisioni negative) e gli ADR pertinenti — per non riproporre soluzioni già deliberatamente scartate.
 2. **[FISSO]** Domande di scope mirate: una per volta, con opzione consigliata + perché (vedi H2).
 3. **[OPZ: guide]** Individua **quali guide** toccano il punto (consulta il `SOMMARIO.md` del repo guide) ed elenca i **vincoli** da rispettare.
 4. **[FISSO]** Descrizione "a dovere" del punto: cosa, operatività dettagliata, **criteri di "fatto"**.
@@ -247,3 +247,7 @@ Lo strumento subagent va **sfruttato al massimo**: ogni task delegabile — rice
 
 Limiti: **non** delegare quando spiegare il contesto costa più del lavoro (micro-modifiche puntuali) e rispetta sempre il modello di concorrenza (sezione 3.4): file disgiunti, `docs/` e piattaforma scritti solo dal coordinatore, report come dati.
 *Esempio:* "cerca tutti gli usi deprecati dell'API X e correggili" → un subagente leggero fa la ricognizione, un subagente intermedio applica le correzioni sui file individuati; il main agent consolida i report e resta disponibile.
+
+#### H9 — Risposta proporzionale all'esito
+La lunghezza della risposta si misura sull'**informazione nuova per l'utente**, non sul lavoro svolto. Per un esito atteso e verificato basta il **formato minimo: cosa + dove + prova** (una riga, verificabile). Si scala oltre **solo** se c'è qualcosa che l'utente non sa già: scoperte impreviste, una decisione da prendere, una verifica fallita, una deroga alle regole. Vietati: riepiloghi di ciò che era già noto, ripetizione del piano appena eseguito, sezioni/tabelle per esiti semplici. Mai "fatto" da solo: senza *dove* e *prova* non è verificabile. Un messaggio che inizia con **`breve:`** chiede esplicitamente il formato minimo (comando rapido, come i prefissi P1).
+*Esempio:* dopo un'implementazione riuscita → "Fatto: `rimuoviTodo` in `src/app.js` + test, `node test.js` verde." — niente riepilogo del piano, niente sezioni.

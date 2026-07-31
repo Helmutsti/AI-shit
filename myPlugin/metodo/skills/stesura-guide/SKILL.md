@@ -9,7 +9,14 @@ Questa skill copre le fasi a monte dell'implementazione: produrre gli artefatti
 di conoscenza che rendono i task esecutivi autocontenuti. Due procedure:
 **distillare una guida** da materiale grezzo e **fissare una decisione** in un
 ADR. I formati di dettaglio sono in `riferimenti/formato-guida.md` e
-`riferimenti/formato-adr.md`.
+`riferimenti/formato-adr.md`; la struttura a tre strati del repo guide
+(SOMMARIO core → guide → grezzi) e' in `riferimenti/struttura-repo-guide.md`.
+
+**DOCUMENTAZIONE vs ADR (per non duplicare):** l'ADR e' il verbale immutabile
+della singola decisione (contesto, opzioni, perche', rischi); `DOCUMENTAZIONE.md`
+e' la foto del presente e cita ogni decisione viva in UNA riga con il link al
+suo ADR. Il ragionamento sta solo nell'ADR: se DOCUMENTAZIONE ri-spiega i
+perche', taglia e linka.
 
 ## Dove vanno gli artefatti (rispetta il metodo)
 
@@ -45,9 +52,14 @@ ADR. I formati di dettaglio sono in `riferimenti/formato-guida.md` e
    ("in questo scenario cosa faresti?"), oppure chiedere "quali domande dovresti
    farmi prima di lavorare su questo progetto?" — le domande che emergono sono
    le lacune della guida. Offriti di simulare tu il lettore a freddo.
-6. **Registra**: voce nel `SOMMARIO.md` del repo guide (dominio, sintesi, quando
-   si applica). Se il progetto ancora la guida per commit, ricorda di
-   aggiornare l'ancora in `docs/PROGETTO.md` dopo il commit del repo guide.
+6. **Colloca e registra** (struttura in `riferimenti/struttura-repo-guide.md`):
+   la guida va in `guide/<dominio>.md` (kebab-case parlante), il materiale
+   grezzo si conserva in `grezzi/<fonte>/` (mai caricato di default) e la
+   sezione **Fonti** della guida punta li'. Poi la riga nel `SOMMARIO.md`
+   (tabella: guida, dominio, quando si applica) — e' l'unico file letto sempre,
+   deve restare sotto una pagina. Se il progetto ancora la guida per commit,
+   ricorda di aggiornare l'ancora in `docs/PROGETTO.md` dopo il commit del
+   repo guide.
 
 ## Procedura B — Dalla sessione di ragionamento all'ADR
 

@@ -235,4 +235,10 @@ test('prefissi: riconosciuti a inizio messaggio, non altrove', () => {
   assert.strictEqual(ar.decidi('implementa il punto 3'), null);
 });
 
+test('breve: chiede il formato minimo H9, non l\'annotazione', () => {
+  const p = ar.decidi('breve: sistema il typo nel README');
+  assert.ok(p && p.includes('H9'), 'doveva iniettare il promemoria H9');
+  assert.strictEqual(ar.decidi('in breve: com\'e\' andata?'), null);
+});
+
 console.log(`✓ ${casi} casi passati`);

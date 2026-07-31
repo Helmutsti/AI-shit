@@ -13,7 +13,7 @@ applicano direttamente.
   codice in questa fase.
 
 **Fase 1 — Definizione** *(prima di scrivere codice)*
-1. `[FISSO]` Analisi di fattibilita' **reale**: leggi il codice vero, spike empirico se serve (H1).
+1. `[FISSO]` Analisi di fattibilita' **reale**: leggi il codice vero, spike empirico se serve (H1). **Consulta anche la documentazione interna**: `DOCUMENTAZIONE.md` (funzionamenti controintuitivi, decisioni negative) e gli ADR pertinenti in `docs/adr/` — per non riproporre soluzioni gia' deliberatamente scartate. La mappa "che domanda → quale file" e' in `PROGETTO.md`.
 2. `[FISSO]` Domande di scope mirate: una per volta, opzione consigliata + perche' (H2).
 3. `[OPZ: guide]` Individua **quali guide** toccano il punto (dal `SOMMARIO.md` del repo guide) ed elenca i **vincoli**.
 4. `[FISSO]` Descrizione "a dovere": cosa, operativita' dettagliata, **criteri di "fatto"**.

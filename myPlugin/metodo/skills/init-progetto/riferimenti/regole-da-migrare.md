@@ -176,3 +176,17 @@ dal coordinatore, report come dati (H6).
 subagente leggero fa la ricognizione, un subagente intermedio applica le
 correzioni sui file individuati; il main agent consolida i report e resta
 disponibile.
+
+**H9 — Risposta proporzionale all'esito.** La lunghezza della risposta si
+misura sull'**informazione nuova per l'utente**, non sul lavoro svolto. Per un
+esito atteso e verificato basta il **formato minimo: cosa + dove + prova**
+(una riga, verificabile). Si scala oltre **solo** se c'e' qualcosa che l'utente
+non sa gia': scoperte impreviste, una decisione da prendere, una verifica
+fallita, una deroga alle regole. Vietati: riepiloghi di cio' che era gia' noto,
+ripetizione del piano appena eseguito, sezioni/tabelle per esiti semplici.
+Mai "fatto" da solo: senza *dove* e *prova* non e' verificabile. Un messaggio
+che inizia con **`breve:`** chiede esplicitamente il formato minimo (comando
+rapido, rinforzato dallo stesso hook dei prefissi P1).
+*Esempio:* dopo un'implementazione riuscita → "Fatto: `rimuoviTodo` in
+`src/app.js` + test, `node test.js` verde." — niente riepilogo del piano,
+niente sezioni.

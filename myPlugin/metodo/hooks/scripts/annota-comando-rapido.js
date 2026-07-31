@@ -2,13 +2,13 @@
 'use strict';
 
 /*
- * GUARDRAIL P1 — "Comandi rapidi di annotazione".
+ * GUARDRAIL P1 + H9 — "Comandi rapidi" (annotazione e brevita').
  *
  * Hook UserPromptSubmit: scatta quando l'utente invia un messaggio. Se il
  * messaggio INIZIA con `bug:`, `miglioramento:`, `punto:` o `forse:`, e' un
- * ordine di SOLA ANNOTAZIONE. Questo hook non blocca: inietta un promemoria
- * (testo su stdout, che diventa contesto per il modello) cosi' Claude registra
- * la voce nel posto giusto e NON parte a scrivere codice.
+ * ordine di SOLA ANNOTAZIONE. Se inizia con `breve:`, chiede la risposta nel
+ * formato minimo di H9 (cosa + dove + prova). Questo hook non blocca: inietta
+ * un promemoria (testo su stdout, che diventa contesto per il modello).
  *
  * E' un rinforzo, non un divieto: la regola resta prosa, ma qui la ricordiamo
  * in modo affidabile a ogni messaggio che usa un prefisso.
@@ -54,6 +54,18 @@ function riconosci(testo) {
  * @returns {string | null}
  */
 function decidi(testo) {
+  const t = (testo || '').replace(/^\s+/, '').toLowerCase();
+
+  // H9 — brevita' su richiesta: `breve:` chiede il formato minimo.
+  if (t.startsWith('breve:')) {
+    return (
+      `[metodo · H9] Questo messaggio inizia con "breve:": rispondi nel ` +
+      `FORMATO MINIMO — cosa + dove + prova, massimo 3 righe. Niente ` +
+      `riepiloghi, sezioni, tabelle o ripetizione del piano. Esempio: ` +
+      `"Fatto: <cosa> in <file>, <verifica> verde."`
+    );
+  }
+
   const c = riconosci(testo);
   if (!c) return null;
   return (

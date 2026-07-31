@@ -8,7 +8,7 @@ di lavoro descritto in `claude_master.md`. Ogni regola critica diventa un
 
 | Hook | Evento | Regola | Cosa fa |
 |---|---|---|---|
-| `annota-comando-rapido` | UserPromptSubmit | P1 | rinforza i prefissi `bug:`/`punto:`/`forse:`/`miglioramento:` (sola annotazione) |
+| `annota-comando-rapido` | UserPromptSubmit | P1/H9 | rinforza i prefissi `bug:`/`punto:`/`forse:`/`miglioramento:` (sola annotazione) e `breve:` (risposta nel formato minimo cosa+dove+prova) |
 | `commit-descrittivo` | PreToolUse (git commit) | H5 | blocca i messaggi di commit sotto i 40 caratteri (heredoc compreso; le firme non contano) |
 | `moduli-git` | PreToolUse (Bash) | P6/H5 | con `push-auto` OFF, ogni `git push` chiede conferma |
 | `proteggi-docs` | PreToolUse (Edit/Write) | §3.4 | impedisce ai subagenti di scrivere in `docs/` (best-effort: campo agente non documentato) |

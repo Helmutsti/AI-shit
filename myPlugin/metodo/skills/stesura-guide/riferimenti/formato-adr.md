@@ -10,7 +10,9 @@ non un documento formale.
 - Una riga di rimando in `docs/STORICO.md`:
   `<data> — Decisione: <titolo> (vedi docs/adr/ADR-NNN-<slug>.md)`.
 - Se la decisione cambia il presente del progetto, aggiorna anche
-  `docs/DOCUMENTAZIONE.md` (sezione decisioni attuali).
+  `docs/DOCUMENTAZIONE.md` — **una riga con link**, mai il ragionamento:
+  `Persistenza: JSON su file — vedi adr/ADR-001-persistenza-json.md`.
+  Il perche' vive solo nell'ADR (un fatto, un posto).
 
 ## Struttura
 

@@ -56,6 +56,16 @@ documenti di lavoro vivono in `docs/` con ruoli netti:
 <vuota all'inizio; cresce con i vincoli specifici del progetto,
  con la stessa dignita' delle altre>
 
+## Come consultare la documentazione
+Prima di descrivere un punto (F1.1), rispondi ai dubbi consultando il file
+giusto — non a memoria:
+- "Come funziona / perche' e' cosi'?"        → docs/DOCUMENTAZIONE.md
+- "E' gia' stato deciso o scartato?"         → docs/DOCUMENTAZIONE.md (decisioni negative) + docs/adr/
+- "Quali vincoli esterni valgono?"           → SOMMARIO.md del repo guide → guida pertinente (se `guide` ON)
+- "Com'e' andata l'ultima volta / storia?"   → docs/STORICO.md (cerca per parola chiave o data)
+Quando: in Fase 1, PRIMA della descrizione "a dovere" — non durante
+l'implementazione. Cerca con i termini del glossario del progetto.
+
 ## Documenti di riferimento
 <la mappa dei documenti, come sopra>
 ```

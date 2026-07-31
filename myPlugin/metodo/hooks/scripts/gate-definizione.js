@@ -92,7 +92,8 @@ function decidi(filePath, inizializzato, puntoAperto, giaChiesto) {
         'F1.5: non risulta un punto aperto (.metodo/punto-aperto.md non esiste). ' +
         'Il metodo chiede di definire e migrare il punto PRIMA di implementare. ' +
         'Se e\' una micro-iterazione di stile conferma pure; altrimenti apri prima ' +
-        'il punto (descrizione "a dovere" + task/milestone, poi crea ' +
+        'il punto (consulta DOCUMENTAZIONE.md e docs/adr/ per non riproporre ' +
+        'soluzioni scartate, descrizione "a dovere" + task/milestone, poi crea ' +
         '.metodo/punto-aperto.md). Non lo richiedero\' piu\' in questa sessione.',
     },
   };
