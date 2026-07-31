@@ -153,3 +153,26 @@ build), dichiarando cosa hai coperto e cosa resta all'utente.
 verifichi l'API da shell, e dai all'utente istruzioni precise ("apri
 `http://localhost:5173`, metti 2 video in coda, lascia finire il primo → il
 secondo deve partire da solo") chiedendo conferma.
+
+**H8 — Delega ai subagenti, main agent libero.** Lo strumento subagent va
+**sfruttato al massimo**: ogni task delegabile — ricerche nel codice,
+implementazioni circoscritte, verifiche, raccolte dati — va affidato a un
+subagente, cosi' il **main agent resta libero** di coordinare e ricevere nuovi
+prompt invece di consumare il proprio contesto sull'esecuzione. La delega si
+decide in **due tempi**: prima **valuta con attenzione quale modello** usare
+per il subagente — e' li' che si risparmiano tempo e token:
+- **modello leggero** (es. Haiku): ricerche, verifiche meccaniche, raccolta
+  dati, task ripetitivi con istruzioni chiare (e' il modello del `verificatore`);
+- **modello intermedio** (es. Sonnet): implementazioni standard su perimetro
+  ben definito (e' il modello dell'`implementatore`);
+- **modello principale**: solo per ragionamento complesso, architettura, task
+  ambigui — o si tiene sul main agent.
+
+Limiti: **non** delegare quando spiegare il contesto costa piu' del lavoro
+(micro-modifiche puntuali) e rispetta sempre il modello di concorrenza
+(`flusso-e-concorrenza.md`): file disgiunti, `docs/` e piattaforma scritti solo
+dal coordinatore, report come dati (H6).
+*Esempio:* "cerca tutti gli usi deprecati dell'API X e correggili" → un
+subagente leggero fa la ricognizione, un subagente intermedio applica le
+correzioni sui file individuati; il main agent consolida i report e resta
+disponibile.

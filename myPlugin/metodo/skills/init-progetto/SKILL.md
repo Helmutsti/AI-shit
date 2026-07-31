@@ -74,12 +74,23 @@ Procedi cosi':
 
 Se nessuna piattaforma e' attiva, assicurati che `piano-su-file` = ON.
 
-### 6. Genera docs/
+### 6. Genera docs/ e .metodo/config.json
 Crea la cartella `docs/` con:
 - **`PROGETTO.md`** — struttura in `riferimenti/template-documenti.md`, riempita
   con la configurazione scelta, il flusso confermato e le regole migrate;
 - **`PIANO.md`**, **`DOCUMENTAZIONE.md`**, **`STORICO.md`** — i seed (vedi lo
   stesso template).
+
+Poi genera **`.metodo/config.json`** (template in `template-documenti.md`): e' il
+file che gli **hook del plugin** leggono per applicare i moduli meccanicamente.
+- `moduli` — la mappa on/off scelta allo Step 1 (serve a `moduli-git`:
+  con `push-auto` OFF ogni `git push` chiede conferma);
+- `verifica` — **se `verifica-e2e` = ON**, chiedi all'utente il comando di
+  build/test del progetto (es. `npm test && npm run build`; se il progetto e'
+  appena nato e non ha ancora test, lascialo vuoto e ricordagli di compilarlo:
+  finche' e' vuoto il gate e' spento);
+- `dati` — solo se il progetto ha una cartella di dati reali con nome diverso
+  da `dati/` (e' la cartella sorvegliata dagli hook P4/H4).
 
 ### 7. Riscrivi CLAUDE.md
 `CLAUDE.md` resta in radice ma deve contenere **solo** un header e la delega

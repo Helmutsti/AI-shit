@@ -33,14 +33,25 @@ function leggiStdin() {
 }
 
 /**
- * La cartella dei dati reali del progetto: <progetto>/dati.
+ * La cartella dei dati reali del progetto. Di default <progetto>/dati, ma il
+ * progetto puo' indicarne un'altra in `.metodo/config.json`:
+ *   { "dati": "data/clienti" }
  * CLAUDE_PROJECT_DIR e' la radice del progetto (la mette Claude Code); se manca,
- * usiamo la cartella corrente. Se dati/ non esiste, gli hook non fanno nulla.
+ * usiamo la cartella corrente. Se la cartella non esiste, gli hook non fanno nulla.
  * @returns {string}
  */
 function cartellaDati() {
   const radice = process.env.CLAUDE_PROJECT_DIR || process.cwd();
-  return path.join(radice, 'dati');
+  let nome = 'dati';
+  try {
+    const cfg = JSON.parse(
+      fs.readFileSync(path.join(radice, '.metodo', 'config.json'), 'utf8')
+    );
+    if (cfg && typeof cfg.dati === 'string' && cfg.dati.trim()) nome = cfg.dati.trim();
+  } catch {
+    /* niente config: vale il default */
+  }
+  return path.join(radice, nome);
 }
 
 /**

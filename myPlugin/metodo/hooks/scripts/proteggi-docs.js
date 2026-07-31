@@ -6,14 +6,21 @@
  *
  * Hook PreToolUse su Edit/Write: scatta PRIMA che venga scritto un file.
  * Il trucco: quando l'hook parte dentro un SUBAGENTE, il JSON di input contiene
- * il campo `agent_id`; la sessione principale (il coordinatore) NON ce l'ha.
+ * un identificativo dell'agente; la sessione principale (il coordinatore) no.
  *
- *   agent_id presente  +  file sotto docs/   =>  NEGA
- *   (tutto il resto)                          =>  passa
+ *   identificativo agente presente  +  file sotto docs/   =>  NEGA
+ *   (tutto il resto)                                       =>  passa
  *
  * Cosi' i subagenti non toccano i documenti condivisi: li aggiorna solo il
  * coordinatore, in serie, dopo aver ricevuto i risultati (niente scritture
  * concorrenti che si sovrascrivono).
+ *
+ * LIMITE NOTO (best-effort): il campo che identifica il subagente NON e'
+ * documentato ufficialmente — controlliamo i nomi piu' plausibili (`agent_id`,
+ * `agent_type`, `agent_name`, `subagent_type`). Se nessuno arriva, l'hook
+ * lascia passare (fail-open): la regola resta comunque coperta dalla prosa
+ * degli agenti del plugin (che vieta docs/) e dal merge unico del coordinatore
+ * quando gli agenti girano in worktree.
  */
 
 /**
@@ -53,7 +60,10 @@ function attraversaDocs(percorso) {
  */
 function decidi(input) {
   const percorso = (input && input.tool_input && input.tool_input.file_path) || '';
-  const agente = (input && input.agent_id) || '';
+  const agente =
+    (input &&
+      (input.agent_id || input.agent_type || input.agent_name || input.subagent_type)) ||
+    '';
 
   if (agente && attraversaDocs(percorso)) {
     return {

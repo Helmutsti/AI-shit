@@ -30,6 +30,13 @@
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/scrivi-nel-progetto.js"],
             "statusMessage": "Verifico che la scrittura resti dentro il progetto",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/gate-definizione.js"],
+            "statusMessage": "Verifico che ci sia un punto aperto (F1.5)",
+            "timeout": 10
           }
         ]
       },
@@ -42,6 +49,40 @@
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/commit-descrittivo.js"],
             "statusMessage": "Controllo che il messaggio di commit spieghi il perche'",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/moduli-git.js"],
+            "statusMessage": "Controllo i moduli git (push-auto)",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/chiudi-punto.js"],
+            "statusMessage": "Controllo che STORICO sia aggiornato prima della chiusura",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/bash-nel-progetto.js"],
+            "statusMessage": "Verifico che il comando non scriva fuori dal progetto",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/scripts/segna-modifica.js"],
             "timeout": 10
           }
         ]

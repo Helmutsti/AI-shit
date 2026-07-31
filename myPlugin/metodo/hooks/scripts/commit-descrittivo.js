@@ -32,17 +32,41 @@ function leggiStdin() {
 
 /**
  * Estrae il messaggio passato con -m "..." oppure -m '...'.
- * Se non c'e' un -m con testo tra apici, restituisce null (non giudichiamo:
- * es. `git commit` senza -m apre l'editor, non ha un messaggio da misurare).
+ * Gestisce anche la forma heredoc usata di frequente dagli agenti:
+ *   git commit -m "$(cat <<'EOF'
+ *   messaggio su piu' righe
+ *   EOF
+ *   )"
+ * (senza questo caso misureremmo il wrapper `$(cat <<'EOF'` invece del testo).
+ * Se non c'e' un -m con testo, restituisce null (non giudichiamo: es.
+ * `git commit` senza -m apre l'editor, non ha un messaggio da misurare).
  * @param {string} comando
  * @returns {string | null}
  */
 function estraiMessaggio(comando) {
-  let m = /-m\s+"([^"]*)"/.exec(comando); // -m "doppi apici"
+  // -m "$(cat <<'EOF' ... EOF" : misura il corpo dell'heredoc.
+  let m = /-m\s+"\$\(\s*cat\s+<<-?\s*'?EOF'?\r?\n([\s\S]*?)\r?\nEOF/.exec(comando);
+  if (m) return m[1];
+  m = /-m\s+"([^"]*)"/.exec(comando); // -m "doppi apici"
   if (m) return m[1];
   m = /-m\s+'([^']*)'/.exec(comando); //     -m 'apici singoli'
   if (m) return m[1];
   return null;
+}
+
+/**
+ * Toglie dal messaggio le righe di firma standard (Co-Authored-By, "Generated
+ * with...") prima di misurarlo: sono boilerplate, non spiegano il perche', e
+ * da sole superano i 40 caratteri gonfiando la misura.
+ * @param {string} messaggio
+ * @returns {string}
+ */
+function senzaFirme(messaggio) {
+  return messaggio
+    .split('\n')
+    .filter((r) => !/^\s*(co-authored-by:|🤖 generated with)/i.test(r))
+    .join('\n')
+    .trim();
 }
 
 /**
@@ -59,8 +83,9 @@ function decidi(input, min = MIN) {
   // Ci interessa solo `git commit`. Qualsiasi altro comando: prosegui.
   if (!comando.includes('git commit')) return null;
 
-  const messaggio = estraiMessaggio(comando);
-  if (messaggio === null) return null; // niente -m: non c'e' nulla da misurare
+  const grezzo = estraiMessaggio(comando);
+  if (grezzo === null) return null; // niente -m: non c'e' nulla da misurare
+  const messaggio = senzaFirme(grezzo);
 
   if (messaggio.length < min) {
     return {
@@ -79,7 +104,7 @@ function decidi(input, min = MIN) {
 }
 
 // Esporta le funzioni cosi' potremo testarle senza lanciare il processo.
-module.exports = { decidi, estraiMessaggio, MIN };
+module.exports = { decidi, estraiMessaggio, senzaFirme, MIN };
 
 // Se il file viene eseguito direttamente (e' il caso quando lo lancia Claude
 // Code), leggi stdin, decidi, stampa l'eventuale decisione ed esci con 0.

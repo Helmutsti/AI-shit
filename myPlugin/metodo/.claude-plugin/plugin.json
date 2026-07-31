@@ -1,7 +1,7 @@
 {
   "name": "myworkflow",
   "description": "Metodo di lavoro agentic-proof: flusso unico, documenti con ruoli distinti, guardrail meccanici sulla concorrenza multi-agente.",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "author": {
     "name": "Manuel Cucca"
   },

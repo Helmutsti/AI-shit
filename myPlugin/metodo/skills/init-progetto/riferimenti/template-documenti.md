@@ -108,4 +108,25 @@ Questo progetto segue il "metodo". La specifica completa e le regole vivono in:
 
 @docs/PROGETTO.md
 ```
+
+**.metodo/config.json** (letto dagli hook del plugin — va versionato)
+```json
+{
+  "moduli": {
+    "avvertimi": true,
+    "guide": false,
+    "unit-test": false,
+    "verifica-e2e": true,
+    "agenti-paralleli": false,
+    "commit-auto": false,
+    "push-auto": false,
+    "figma": false,
+    "piano-su-file": true
+  },
+  "verifica": "npm test && npm run build",
+  "dati": "dati"
+}
 ```
+- `moduli` — riflette le scelte del wizard (aggiornalo se la configurazione cambia);
+- `verifica` — comando del gate end-to-end; stringa vuota o campo assente = gate spento;
+- `dati` — cartella dei dati reali sorvegliata dagli hook P4/H4 (default `dati`).

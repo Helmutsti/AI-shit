@@ -15,12 +15,19 @@
  *
  * Stesso CONTATORE DI SICUREZZA di verifica-dati: dopo MAX tentativi lascia
  * passare, per non rilanciare Claude all'infinito su un test che resta rosso.
+ *
+ * ECONOMIA: build/test partono SOLO se la sessione ha modificato dei file
+ * (segnaposto lasciato da segna-modifica.js, hook PostToolUse su Edit/Write).
+ * Un turno puramente conversazionale non paga minuti di build per niente.
+ * A verifica verde il segnaposto si rimuove: il gate non riparte finche'
+ * non c'e' una nuova modifica.
  */
 
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const { spawnSync } = require('child_process');
+const { fileModifiche } = require('./segna-modifica.js');
 
 const MAX_TENTATIVI = 2;
 
@@ -130,6 +137,10 @@ if (require.main === module) {
       const cmd = comandoVerifica();
       if (cmd === null) process.exit(0); // gate spento
 
+      // Nessuna modifica dall'ultima verifica verde: niente da controllare.
+      const flagModifiche = fileModifiche(sessione);
+      if (!fs.existsSync(flagModifiche)) process.exit(0);
+
       // Lancia il comando nella radice del progetto. stdio:'ignore' = non
       // inquiniamo l'output; ci interessa solo il codice d'uscita.
       const r = spawnSync(cmd, {
@@ -150,6 +161,8 @@ if (require.main === module) {
 
       if (esito.reset) {
         if (fs.existsSync(fileTent)) fs.rmSync(fileTent);
+        // Verde: le modifiche sono verificate, spegni il segnaposto.
+        if (fs.existsSync(flagModifiche)) fs.rmSync(flagModifiche);
       } else {
         fs.writeFileSync(fileTent, String(esito.contatore));
       }

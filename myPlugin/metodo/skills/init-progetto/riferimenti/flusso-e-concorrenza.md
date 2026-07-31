@@ -20,6 +20,10 @@ applicano direttamente.
 5. `[FISSO — migrazione]`
    - se **piattaforma ON** → crea il task/milestone sulla piattaforma; il punto **esce da `PIANO.md`**;
    - se **`piano-su-file` ON** → il punto diventa milestone in `docs/PIANO.md`.
+   - **Apri il punto**: crea **`.metodo/punto-aperto.md`** con il riferimento al
+     punto (titolo + task/milestone). E' il segnale meccanico "si puo'
+     implementare": un hook chiede conferma per ogni modifica al codice fatta
+     senza punto aperto.
    - 🔒 **Nessuna implementazione sostanziale prima di questo passo.**
 
 **Fase 2 — Implementazione**
@@ -37,6 +41,9 @@ applicano direttamente.
 12. `[FISSO]` aggiornamento documenti:
     - **`STORICO.md`** — **sempre**: append dell'esito integrale (implementazione, scoperte impreviste, bug risolti).
     - **`DOCUMENTAZIONE.md`** — **solo se** il punto cambia il presente (nuova meccanica controintuitiva, decisione core, cosa decisa-e-non-fatta da ricordare).
+    - **Chiudi il punto**: cancella **`.metodo/punto-aperto.md`** — l'ordine e'
+      obbligato da un hook: la cancellazione viene negata finche' `STORICO.md`
+      non risulta aggiornato in sessione (prima l'append, poi la chiusura).
 13. `[OPZ: commit-auto]` commit descrittivo (spiega il *perche'*); altrimenti commit **solo su richiesta**. `[OPZ: push-auto]` push (implica `commit-auto`); altrimenti **mai** per default.
 
 ---

@@ -238,3 +238,12 @@ Applica il **modello di concorrenza (sezione 3.4)**: proprietà **esclusiva** de
 #### H7 — Se non puoi verificare tu, spiega all'utente come farlo
 Quando la verifica end-to-end (H3) **non è eseguibile da te** per un limite dell'ambiente (browser che non raggiunge `localhost`, nessun accesso a un dispositivo/servizio, azione vietata come inserire credenziali): **non fingere** di averla fatta né saltarla in silenzio. **Dichiara il limite** e **spiega i passi esatti** (comandi, cosa aprire, cosa osservare, esito atteso), poi **attendi il riscontro** prima di dire "fatto". Nel frattempo verifica tutto ciò che *è* alla tua portata (logica core/server via CLI/`curl`, build), dichiarando cosa hai coperto e cosa resta all'utente.
 *Esempio:* il browser automatico non apre `localhost` → avvii comunque il server, verifichi l'API da shell, e dai all'utente istruzioni precise ("apri `http://localhost:5173`, metti 2 video in coda, lascia finire il primo → il secondo deve partire da solo") chiedendo conferma.
+
+#### H8 — Delega ai subagenti, main agent libero
+Lo strumento subagent va **sfruttato al massimo**: ogni task delegabile — ricerche nel codice, implementazioni circoscritte, verifiche, raccolte dati — va affidato a un subagente, così il **main agent resta libero** di coordinare e ricevere nuovi prompt invece di consumare il proprio contesto sull'esecuzione. La delega però si decide in **due tempi**: prima **valuta con attenzione quale modello** usare per il subagente — è lì che si risparmiano tempo e token:
+- **modello leggero** (es. Haiku): ricerche, verifiche meccaniche, raccolta dati, task ripetitivi con istruzioni chiare;
+- **modello intermedio** (es. Sonnet): implementazioni standard su perimetro ben definito;
+- **modello principale**: solo per ragionamento complesso, architettura, task ambigui — o si tiene sul main agent.
+
+Limiti: **non** delegare quando spiegare il contesto costa più del lavoro (micro-modifiche puntuali) e rispetta sempre il modello di concorrenza (sezione 3.4): file disgiunti, `docs/` e piattaforma scritti solo dal coordinatore, report come dati.
+*Esempio:* "cerca tutti gli usi deprecati dell'API X e correggili" → un subagente leggero fa la ricognizione, un subagente intermedio applica le correzioni sui file individuati; il main agent consolida i report e resta disponibile.
